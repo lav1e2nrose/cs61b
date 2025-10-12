@@ -118,32 +118,33 @@ public class Model extends Observable {
         // changed local variable to true.
         board.startViewingFrom(side);
 
-        for (int row = 0; row < board.size(); row++) {
-            int col = 0, pos = 0;
-            while (col < board.size()) {
+        for (int col = 0; col < board.size(); col++) {
+            int targetRow = board.size() - 1;
+            for (int row = board.size() - 1; row >= 0; row--) {
                 Tile t = board.tile(col, row);
                 if (t != null) {
-                    board.move(col, pos, t);
-                    pos++;
-                    changed = true;
+                    if (row != targetRow) {
+                        board.move(col, targetRow, t);
+                        changed = true;
+                    }
+                    targetRow--;
                 }
-                col++;
             }
         }
 
         for (int col = 0; col < board.size(); col++) {
-            for (int row = 0; row < board.size() - 1; row++) {
+            for (int row = board.size() - 2; row >= 0; row--) {
                 Tile t1 = board.tile(col, row);
                 Tile t2 = board.tile(col, row + 1);
 
                 if (t1 != null && t2 != null && t1.value() == t2.value()) {
-                    board.move(col, row, t2);
+                    board.move(col, row + 1, t1);
                     changed = true;
-                    score += t1.value();
+                    this.score += board.tile(col, row + 1).value();
                     merged = true;
                 }
 
-                    score = 100;
+                //    score = 100;
             }
         }
 
