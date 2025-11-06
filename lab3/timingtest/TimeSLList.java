@@ -31,10 +31,10 @@ public class TimeSLList {
 
         for (int k : testList) {
             SLList<Integer> test = new SLList<>();
-            for (int i : testList) {
+            for (int i = 0; i < k; i++) {
                 test.addLast(i);
             }
-            int M = 1000000000;
+            int M = 10000;
             Stopwatch sw = new Stopwatch();
             for (int j = 0; j < M; j++) {
                 test.getLast();

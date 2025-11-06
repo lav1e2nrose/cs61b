@@ -33,21 +33,32 @@ public class TestBuggyAList {
         AListNoResizing<Integer> L = new AListNoResizing<>();
         BuggyAList<Integer> B = new BuggyAList<>();
 
-        int N = 5000;
-        for (int i = 0; i < N; i += 1) {
-            int operationNumber = StdRandom.uniform(0, 2);
+        int N = 5000; // 测试次数
+        for (int i = 0; i < N; i++) {
+            int operationNumber = StdRandom.uniform(0, 4); // 0~3 四种操作
+
             if (operationNumber == 0) {
                 // addLast
                 int randVal = StdRandom.uniform(0, 1000);
                 L.addLast(randVal);
                 B.addLast(randVal);
-                assertEquals(L.removeLast(), B.removeLast());
                 System.out.println("addLast(" + randVal + ")");
             } else if (operationNumber == 1) {
                 // size
-                int size = L.size();
                 assertEquals(L.size(), B.size());
-                System.out.println("size: " + size);
+                System.out.println("size: " + L.size());
+            } else if (operationNumber == 2 && L.size() > 0) {
+                // getLast
+                int lastL = L.getLast();
+                int lastB = B.getLast();
+                assertEquals(lastL, lastB);
+                System.out.println("getLast -> " + lastL);
+            } else if (operationNumber == 3 && L.size() > 0) {
+                // removeLast
+                int valL = L.removeLast();
+                int valB = B.removeLast();
+                assertEquals(valL, valB);
+                System.out.println("removeLast -> " + valL);
             }
         }
     }
